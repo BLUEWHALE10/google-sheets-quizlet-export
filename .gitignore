@@ -1,0 +1,3 @@
+secure/
+.venv/
+secure/service_account.json
