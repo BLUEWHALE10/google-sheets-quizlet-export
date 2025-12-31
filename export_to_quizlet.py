@@ -62,14 +62,35 @@ def get_worksheet_from_file(file_name):
     else:
         print("ว่างเปล่า หรือ หาไฟล์ไม่เจอ")
 
+
+
+
 # --- เริ่มทำงาน ---
-if __name__ == "__main__":
 
 # --- recived worksheet from sheets using API and save to txt ---    
 #    get_worksheet_and_save_file(Json_path,Sheet_name,'Oxford 3000 Sorted','output_filename')
 
 
 # --- read worksheet from file ---
-    my_result_data = get_worksheet_from_file(output_filename)
-
+def export_to_quizlet():
+    ms = MyFileLib()
+    mybot = MysheetLib()    
     
+    my_result_data = get_worksheet_from_file(output_filename)   
+    
+    list_data_out = []
+    list_data = []
+    
+    for name_worksheers in range (21,28):
+        
+
+        list_data = mybot.get_google_sheet_data(Json_path,Sheet_name,my_result_data[name_worksheers])
+
+        for each_word in range (0,len(list_data)):
+            list_data_out.append(str(list_data[each_word]['No.']) + '. ' + list_data[each_word]['Word'] + '    ' + list_data[each_word]['Meaning']+ ' ('+list_data[each_word]['POS']+')')
+        
+        ms.save_to_txt(list_data_out,f"{my_result_data[name_worksheers]}.txt")
+        list_data_out.clear()
+
+if __name__ == "__main__":
+    export_to_quizlet()
